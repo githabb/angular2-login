@@ -18,22 +18,23 @@ export class ApiecmaService {
                         "password": password
                     }
                 };
-
-                /*
-                firstName: "Yurii"
-id : 1
-lastName : "Yevchenko"
-token : "fake-jwt-token"
-username : "yuriarchitect@gmail.com"
-                */
-        
+                
         return this.http.post('http://api.ecma.it-lab.su/', requestJson)
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let user = response.json();
                 if (user && user.result && user.result.authenticated === true) {
+
+                    let u = {
+                        firstName: user.result.userfio,
+                        id : 1,
+                        lastName : user.result.userfio,
+                        token : user.result.userfio,
+                        username : username
+                    }
+
                     // store user details and jwt token in local storage to keep user logged in between page refreshes                    
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('currentUser', JSON.stringify(u));
                 }
             });
     }
