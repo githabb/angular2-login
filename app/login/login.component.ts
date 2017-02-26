@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AlertService, AuthenticationService } from '../_services/index';
+import { AlertService, AuthenticationService, ApiecmaService } from '../_services/index';
 
 @Component({
     moduleId: module.id,
@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
+        private apiecmaService: ApiecmaService,
         private alertService: AlertService) { }
 
     ngOnInit() {
@@ -32,7 +33,15 @@ export class LoginComponent implements OnInit {
 
         if(this.model.useEcmaAPI === true)
         {
-
+            this.apiecmaService.login(this.model.username, this.model.password)
+                .subscribe(
+                    data => {
+                        this.router.navigate([this.returnUrl]);
+                    },
+                    error => {
+                        this.alertService.error(error);
+                        this.loading = false;
+                    });
         }
         else
         {

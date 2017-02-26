@@ -13,7 +13,7 @@ import { routing }        from './app.routing';
 
 import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, UserService } from './_services/index';
+import { AlertService, AuthenticationService, ApiecmaService, UserService } from './_services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
@@ -36,6 +36,7 @@ import { RegisterComponent } from './register/index';
         AuthGuard,
         AlertService,
         AuthenticationService,
+        ApiecmaService,
         UserService,
 
         // providers used to create fake backend
