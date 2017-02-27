@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { User } from '../_models/index';
-import { UserService } from '../_services/index';
+import { User, SessionKey } from '../_models/index';
+import { AuthenticationService } from '../_services/index';
 
 @Component({
     moduleId: module.id,
@@ -9,22 +9,16 @@ import { UserService } from '../_services/index';
 })
 
 export class HomeComponent implements OnInit {
-    currentUser: User;
-    users: User[] = [];
+	currentUser: SessionKey;
+    model: User;
 
-    constructor(private userService: UserService) {
+    constructor(private authenticationService: AuthenticationService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.model = authenticationService.user;
     }
 
     ngOnInit() {
-        this.loadAllUsers();
+        //this.loadAllUsers();
     }
 
-    deleteUser(id: number) {
-        this.userService.delete(id).subscribe(() => { this.loadAllUsers() });
-    }
-
-    private loadAllUsers() {
-        this.userService.getAll().subscribe(users => { this.users = users; });
-    }
 }

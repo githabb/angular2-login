@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
-import { User } from '../_models/index';
+import { SessionKey } from '../_models/index';
 
 @Injectable()
 export class UserService {
@@ -15,11 +15,11 @@ export class UserService {
         return this.http.get('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
     }
 
-    create(user: User) {
+    create(user: SessionKey) {
         return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
     }
 
-    update(user: User) {
+    update(user: SessionKey) {
         return this.http.put('/api/users/' + user.id, user, this.jwt()).map((response: Response) => response.json());
     }
 
@@ -32,8 +32,8 @@ export class UserService {
     private jwt() {
         // create authorization header with jwt token
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+        if (currentUser && currentUser.session_id) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.session_id });
             return new RequestOptions({ headers: headers });
         }
     }

@@ -1,12 +1,52 @@
-﻿<div class="col-md-6 col-md-offset-3">
-    <h1>Hi {{currentUser.firstName}}!</h1>
-    <p>You're logged in with Angular 2!!</p>
-    <h3>All registered users:</h3>
-    <ul>
-        <li *ngFor="let user of users">
-            {{user.username}} ({{user.firstName}} {{user.lastName}})
-            - <a (click)="deleteUser(user.id)">Delete</a>
-        </li>
-    </ul>
-    <p><a [routerLink]="['/login']">Logout</a></p>
+﻿<div *ngIf="model != null">
+    <div class="container">
+        <h2>{{model.userfio}}</h2>
+        <p>Номер: {{model.userid}}</p>
+        <h3>Имя пользователя: {{model.username}}</h3>
+        <h4 *ngIf="model.userrole != null">Роль: {{model.userrole}}</h4>
+    </div>
+
+    <div class="container" *ngIf="model.vehicles != null">
+      <h3>Автомобили</h3>
+      <p>Количество: {{model.vehicles.length}}</p>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Гос номер</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of model.vehicles">
+            <td>{{v.id}}</td>
+            <td>{{v.gos_number}}</td>
+          </tr>          
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container" *ngIf="model.trailers != null">
+      <h3>Прицепы</h3>
+      <p>Количество: {{model.trailers.length}}</p>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Гос номер</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of model.trailers">
+            <td>{{t.id}}</td>
+            <td>{{t.gos_number}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>    
+</div>
+<div *ngIf="model == null">
+  <h3>Нужен метод для загрузки машин пользователя по его userid, session_id</h3>
+</div>
+<div>
+  <p><a [routerLink]="['/login']">Logout</a></p>
 </div>
